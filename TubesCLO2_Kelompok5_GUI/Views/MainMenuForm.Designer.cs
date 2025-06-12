@@ -30,18 +30,19 @@
         {
             dataGridViewMahasiswa = new DataGridView();
             btnTambah = new Button();
-            btnSettings = new Button();
+            btnSetting = new Button(); // Changed btnSettings to btnSetting
             ((System.ComponentModel.ISupportInitialize)dataGridViewMahasiswa).BeginInit();
             SuspendLayout();
             // 
             // dataGridViewMahasiswa
             // 
+            dataGridViewMahasiswa.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Added Anchor
+            dataGridViewMahasiswa.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Added AutoSizeColumnsMode
             dataGridViewMahasiswa.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewMahasiswa.Dock = DockStyle.Fill;
-            dataGridViewMahasiswa.Location = new Point(0, 0);
+            dataGridViewMahasiswa.Location = new Point(12, 50); // Changed Location
             dataGridViewMahasiswa.Name = "dataGridViewMahasiswa";
             dataGridViewMahasiswa.RowHeadersWidth = 51;
-            dataGridViewMahasiswa.Size = new Size(1534, 810);
+            dataGridViewMahasiswa.Size = new Size(1510, 748); // Changed Size
             dataGridViewMahasiswa.TabIndex = 0;
             // 
             // btnTambah
@@ -52,23 +53,23 @@
             btnTambah.TabIndex = 1;
             btnTambah.Text = "Tambah";
             btnTambah.UseVisualStyleBackColor = true;
-            btnTambah.Click += btnTambah_Click;
+            btnTambah.Click += btnTambah_Click; // Re-enabled this line
             // 
-            // btnSettings
+            // btnSetting
             // 
-            btnSettings.Location = new Point(121, 12);
-            btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(94, 29);
-            btnSettings.TabIndex = 2;
-            btnSettings.Text = "Setting";
-            btnSettings.UseVisualStyleBackColor = true;
+            btnSetting.Location = new Point(112, 12); // Changed Location slightly
+            btnSetting.Name = "btnSetting"; // Changed variable name
+            btnSetting.Size = new Size(94, 29);
+            btnSetting.TabIndex = 2;
+            btnSetting.Text = "Pengaturan"; // Changed Text
+            btnSetting.UseVisualStyleBackColor = true;
             // 
             // MainMenuForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1534, 810);
-            Controls.Add(btnSettings);
+            Controls.Add(btnSetting); // Changed variable name
             Controls.Add(btnTambah);
             Controls.Add(dataGridViewMahasiswa);
             Name = "MainMenuForm";
@@ -81,6 +82,6 @@
 
         private DataGridView dataGridViewMahasiswa;
         private Button btnTambah;
-        private Button btnSettings;
+        private Button btnSetting; // Changed variable name
     }
 }

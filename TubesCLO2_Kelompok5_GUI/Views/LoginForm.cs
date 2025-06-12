@@ -14,19 +14,24 @@ namespace TubesCLO2_Kelompok5_GUI
             _configService = configService;
             _loginController = new LoginController(_configService);
 
-            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
-            ApplyLocalization(_configService);
+            // this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click); // Removed this line
+            ApplyLocalization(); // Call parameterless ApplyLocalization
         }
 
-        private void ApplyLocalization(ConfigurationService configService)
+        // Made private and parameterless
+        private void ApplyLocalization()
         {
-            this.Text = configService.GetMessage("LoginFormTitle");
-            lblUsername.Text = configService.GetMessage("UsernameLabel");
-            lblPassword.Text = configService.GetMessage("PasswordLabel");
-            btnLogin.Text = configService.GetMessage("LoginButton");
+            this.Text = _configService.GetMessage("LoginFormTitle") ?? "Login";
+            lblUsername.Text = _configService.GetMessage("UsernameLabel") ?? "Username:";
+            lblPassword.Text = _configService.GetMessage("PasswordLabel") ?? "Password:";
+            btnLogin.Text = _configService.GetMessage("LoginButton") ?? "Login";
             // Consider localizing MessageBox titles as well if they are static
         }
 
+        public void ApplyLocalizationPublic()
+        {
+            ApplyLocalization();
+        }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
@@ -44,6 +49,7 @@ namespace TubesCLO2_Kelompok5_GUI
                 this.Hide();
                 // Pass MainController which contains ConfigService to MainMenuForm
                 MainMenuForm mainMenuForm = new MainMenuForm(_loginController.MainController);
+                mainMenuForm.FormClosed += (s, args) => this.Close(); // Close LoginForm when MainMenuForm is closed
                 mainMenuForm.Show();
             }
             else
