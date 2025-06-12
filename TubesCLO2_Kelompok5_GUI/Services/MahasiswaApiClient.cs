@@ -84,7 +84,7 @@ namespace TubesCLO2_Kelompok5_GUI.Services
             var queryParams = new List<string>();
             if (!string.IsNullOrWhiteSpace(nim)) queryParams.Add($"nim={Uri.EscapeDataString(nim)}");
             if (!string.IsNullOrWhiteSpace(nama)) queryParams.Add($"nama={Uri.EscapeDataString(nama)}");
-            string queryString = queryParams.Any() ? "?" + string.Join("&", queryParams) : "";
+            string queryString = queryParams.Count > 0 ? "?" + string.Join("&", queryParams) : "";
             string requestUrl = $"api/mahasiswa{queryString}";
             _configService?.GetMessage("Searching");
             Console.WriteLine($"Calling API: GET {requestUrl}");
