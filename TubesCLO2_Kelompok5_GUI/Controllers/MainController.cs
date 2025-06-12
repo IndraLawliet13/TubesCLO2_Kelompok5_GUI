@@ -11,9 +11,12 @@ namespace TubesCLO2_Kelompok5_GUI.Controllers
         private readonly MahasiswaApiClient _apiClient;
         private readonly ConfigurationService _configService;
 
-        public MainController()
+        public ConfigurationService ConfigService { get { return _configService; } }
+
+        // Updated constructor to accept ConfigurationService
+        public MainController(ConfigurationService configService)
         {
-            _configService = new ConfigurationService();
+            _configService = configService; // Use the passed instance
             _apiClient = new MahasiswaApiClient(_configService);
         }
 
@@ -47,6 +50,45 @@ namespace TubesCLO2_Kelompok5_GUI.Controllers
             {
                 Console.WriteLine($"Error deleting data: {ex.Message}");
                 return false;
+            }
+        }
+
+        public async Task<ApiResponse<Mahasiswa>?> AddMahasiswaAsync(Mahasiswa mahasiswa)
+        {
+            try
+            {
+                // Assuming _apiClient.AddMahasiswaAsync already returns ApiResponse<Mahasiswa>
+                return await _apiClient.AddMahasiswaAsync(mahasiswa);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exception as needed
+                Console.WriteLine($"Error in MainController.AddMahasiswaAsync: {ex.Message}");
+                // Return a generic error response or rethrow, depending on desired error handling strategy
+                return new ApiResponse<Mahasiswa>
+                {
+                    Message = $"An error occurred in Controller: {ex.Message}",
+                    Data = null,
+                };
+            }
+        }
+
+        public async Task<ApiResponse<Mahasiswa>?> UpdateMahasiswaAsync(string nim, Mahasiswa mahasiswa)
+        {
+            try
+            {
+                // Assuming _apiClient.UpdateMahasiswaAsync already returns ApiResponse<Mahasiswa>
+                return await _apiClient.UpdateMahasiswaAsync(nim, mahasiswa);
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exception as needed
+                Console.WriteLine($"Error in MainController.UpdateMahasiswaAsync: {ex.Message}");
+                return new ApiResponse<Mahasiswa>
+                {
+                    Message = $"An error occurred in Controller: {ex.Message}",
+                    Data = null,
+                };
             }
         }
     }
