@@ -1,4 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
+using Microsoft.Extensions.Configuration;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TubesCLO2_Kelompok5_GUI.Services
 {
@@ -18,11 +25,13 @@ namespace TubesCLO2_Kelompok5_GUI.Services
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-        ApiBaseUrl = _configuration.GetValue<string>("ApiConfig:BaseUrl") ?? "http://localhost:5000";
+            // DbC: Pastikan konfigurasi ter-load
+            Debug.Assert(_configuration != null, "Configuration should not be null after build.");
 
-        _currentLanguage = _configuration.GetValue<string>("AppConfig:DefaultLanguage") ?? "id";
-        LoadMessages(_currentLanguage);
-    }
+            // Ambil URL API dari config
+            ApiBaseUrl = _configuration.GetValue<string>("ApiConfig:BaseUrl") ?? "http://localhost:5000"; // DbC: Pastikan URL tidak kosong
+            ArgumentException.ThrowIfNullOrWhiteSpace(ApiBaseUrl, nameof(ApiBaseUrl));
+            Console.WriteLine($"API Base URL set to: {ApiBaseUrl}"); // Debugging info
 
             // Ambil bahasa default dan set bahasa saat ini
             _defaultLanguage = _configuration.GetValue<string>("AppConfig:DefaultLanguage") ?? "id";
