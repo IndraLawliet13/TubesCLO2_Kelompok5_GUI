@@ -138,7 +138,7 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             }
         }
 
-        private void btnKembali_Click(object sender, EventArgs e)
+        private void btnKembali_Click_1(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel; // Indicate form was closed without saving
             this.Close();

@@ -134,6 +134,7 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             btnKembali.TabIndex = 9;
             btnKembali.Text = "Kembali";
             btnKembali.UseVisualStyleBackColor = true;
+            btnKembali.Click += btnKembali_Click_1;
             // 
             // TambahMahasiswaForm
             // 
