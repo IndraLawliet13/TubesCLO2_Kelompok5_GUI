@@ -21,10 +21,6 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             _mainController = controller;
             _configService = controller.ConfigService; // Assuming ConfigService is a public property of MainController
 
-            // Connect event handlers
-            this.btnSimpan.Click += new System.EventHandler(this.btnSimpan_Click);
-            this.btnKembali.Click += new System.EventHandler(this.btnKembali_Click);
-
             ApplyLocalization();
         }
 

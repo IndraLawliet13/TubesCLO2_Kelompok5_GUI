@@ -94,7 +94,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(379, 248);
+            ClientSize = new Size(1808, 878);
             Controls.Add(btnKembali);
             Controls.Add(btnSimpan);
             Controls.Add(rbEnglish);

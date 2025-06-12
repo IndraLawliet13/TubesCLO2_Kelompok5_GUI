@@ -121,39 +121,52 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             }
             else if (dataGridViewMahasiswa.Columns[e.ColumnIndex].Name == "EditColumn")
             {
-                // Placeholder for Edit functionality
-                MessageBox.Show($"Edit button clicked for NIM: {nim}", "Edit Action", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                // TODO: Implement Edit Mahasiswa functionality
-                // Example:
-                // EditMahasiswaForm editForm = new EditMahasiswaForm(nim, mainController, _configService);
-                // editForm.ShowDialog();
-                // await LoadMahasiswaDataAsync(); // Refresh data if changes were made
+                Mahasiswa selectedMahasiswa = dataGridViewMahasiswa.Rows[e.RowIndex].DataBoundItem as Mahasiswa;
+                if (selectedMahasiswa != null)
+                {
+                    EditMahasiswaForm editForm = new EditMahasiswaForm(mainController, selectedMahasiswa);
+                    DialogResult result = editForm.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        await LoadMahasiswaDataAsync(); // Refresh data if changes were made
+                    }
+                }
+                else
+                {
+                    // Optionally, handle the case where selectedMahasiswa is null
+                    MessageBox.Show(_configService.GetMessage("ErrorRetrievingMahasiswa") ?? "Gagal mengambil data mahasiswa.",
+                                    _configService.GetMessage("ErrorTitle") ?? "Error",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-        private void btnTambah_Click(object sender, EventArgs e)
+        private async void btnTambah_Click(object sender, EventArgs e)
         {
-            // Placeholder for Add functionality
-            MessageBox.Show("Tambah button clicked", "Add Action", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            // TODO: Implement Add Mahasiswa functionality
-            // Example:
-            // AddMahasiswaForm addForm = new AddMahasiswaForm(mainController, _configService);
-            // addForm.ShowDialog();
-            // await LoadMahasiswaDataAsync(); // Refresh data if a new mahasiswa was added
+            // Create an instance of TambahMahasiswaForm, passing the mainController instance
+            TambahMahasiswaForm tambahMahasiswaForm = new TambahMahasiswaForm(mainController);
+
+            // Show the TambahMahasiswaForm as a dialog
+            DialogResult result = tambahMahasiswaForm.ShowDialog();
+
+            // After the dialog is closed, check if its DialogResult is DialogResult.OK
+            if (result == DialogResult.OK)
+            {
+                // If it is DialogResult.OK, call await LoadMahasiswaDataAsync() to refresh the student list
+                await LoadMahasiswaDataAsync();
+            }
         }
 
-        private void btnSetting_Click(object sender, EventArgs e)
+        private async void btnSetting_Click(object sender, EventArgs e)
         {
-            // Placeholder for Settings functionality
-            MessageBox.Show(_configService.GetMessage("SettingsNotImplementedMessage") ?? "Fungsi pengaturan belum diimplementasikan.",
-                           _configService.GetMessage("InformationTitle") ?? "Informasi",
-                           MessageBoxButtons.OK, MessageBoxIcon.Information);
-            // TODO: Implement Settings functionality
-            // Example:
-            // SettingsForm settingsForm = new SettingsForm(_configService);
-            // settingsForm.ShowDialog();
-            // ApplyLocalization(); // Re-apply localization if settings changed language
-            // await LoadMahasiswaDataAsync(); // Refresh data if needed
+            SettingForm settingsForm = new SettingForm(mainController.ConfigService);
+            DialogResult result = settingsForm.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                ApplyLocalization();
+                await LoadMahasiswaDataAsync(); // Refresh data to update DataGridView headers/texts
+            }
         }
 
         private void ApplyLocalization()
@@ -162,18 +175,28 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             btnTambah.Text = _configService.GetMessage("AddButtonText") ?? "Tambah";
             btnSetting.Text = _configService.GetMessage("SettingsButtonText") ?? "Pengaturan";
 
-            // If DataGridView columns are added dynamically and need localization for headers
-            // Or if specific columns added via designer need header localization
-            // Example for a pre-existing column named "NIM_Column" in the designer:
-            // if (dataGridViewMahasiswa.Columns["NIM_Column"] != null)
+            // Update DataGridView column headers and button texts
+            if (dataGridViewMahasiswa.Columns["EditColumn"] is DataGridViewButtonColumn editCol)
+            {
+                editCol.HeaderText = _configService.GetMessage("EditColumnHeader") ?? "Edit";
+                editCol.Text = _configService.GetMessage("EditButtonText") ?? "Edit";
+            }
+
+            if (dataGridViewMahasiswa.Columns["DeleteColumn"] is DataGridViewButtonColumn deleteCol)
+            {
+                deleteCol.HeaderText = _configService.GetMessage("DeleteColumnHeader") ?? "Delete";
+                deleteCol.Text = _configService.GetMessage("DeleteButtonText") ?? "Delete";
+            }
+
+            // Example for localizing other data-bound columns if needed:
+            // if (dataGridViewMahasiswa.Columns["NIM"] != null) // Assuming "NIM" is the DataPropertyName
             // {
-            //     dataGridViewMahasiswa.Columns["NIM_Column"].HeaderText = _configService.GetMessage("NIMColumnHeader") ?? "NIM";
+            //     dataGridViewMahasiswa.Columns["NIM"].HeaderText = _configService.GetMessage("NIMColumnHeader") ?? "NIM";
             // }
-            // if (dataGridViewMahasiswa.Columns["Nama_Column"] != null)
+            // if (dataGridViewMahasiswa.Columns["Nama"] != null) // Assuming "Nama" is the DataPropertyName
             // {
-            //      dataGridViewMahasiswa.Columns["Nama_Column"].HeaderText = _configService.GetMessage("NameColumnHeader") ?? "Nama";
+            //      dataGridViewMahasiswa.Columns["Nama"].HeaderText = _configService.GetMessage("NameColumnHeader") ?? "Nama";
             // }
-            // Note: Edit and Delete column headers are set in AddButtonColumns using _configService
         }
     }
 }

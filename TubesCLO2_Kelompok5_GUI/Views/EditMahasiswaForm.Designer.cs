@@ -140,7 +140,7 @@ namespace TubesCLO2_Kelompok5_GUI.Views
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(432, 278);
+            ClientSize = new Size(1806, 880);
             Controls.Add(btnKembali);
             Controls.Add(btnSimpan);
             Controls.Add(txtIPK);
